@@ -1,2 +1,2 @@
 include README.md LICENSE
-include kmcdash/Dashboard_KMC.ipynb
+include kmcdash/*.ipynb
