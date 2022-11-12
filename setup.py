@@ -21,7 +21,7 @@ REQUIRES_PYTHON = '>=3.6.0'
 VERSION = '0.1.0'
 
 # What packages are required for this module to be executed?
-REQUIRED = ['matplotlib<=3.5.0', 'tqdm', 'voila', 'ipywidgets<=7.7.2', 'pandas', 'IPython','Ipympl==0.7.0']
+REQUIRED = ['matplotlib<=3.5.0', 'voila==0.3.2', 'ipywidgets==7.7.2', 'pandas', 'IPython','Ipympl==0.7.0', 'jinja2==3.0.0']
 
 # What packages are optional?
 EXTRAS = {
