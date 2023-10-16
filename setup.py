@@ -7,6 +7,7 @@
 import io
 import os
 import sys
+import subprocess
 from shutil import rmtree
 
 from setuptools import find_packages, setup, Command
@@ -17,8 +18,7 @@ DESCRIPTION = 'Visualization tool for KMC simulations run with xcharge'
 URL = 'https://github.com/LeonardoESousa/kmcdash'
 EMAIL = 'leonardo.sousa137@gmail.com'
 AUTHOR = 'Leonardo Evaristo de Sousa and Tiago de Sousa Araújo Cassiano'
-REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '0.1.0'
+REQUIRES_PYTHON = '>=3.8.0'
 
 # What packages are required for this module to be executed?
 REQUIRED = ['matplotlib<=3.5.0', 'voila==0.3.2', 'ipywidgets==7.7.2', 'pandas', 'IPython','Ipympl==0.7.0', 'jinja2==3.0.0']
@@ -46,13 +46,9 @@ except FileNotFoundError:
 
 # Load the package's __version__.py module as a dictionary.
 about = {}
-if not VERSION:
-    project_slug = NAME.lower().replace("-", "_").replace(" ", "_")
-    with open(os.path.join(here, project_slug, '__version__.py')) as f:
-        exec(f.read(), about)
-else:
-    about['__version__'] = VERSION
-
+project_slug = 'kmcdash'
+with open(os.path.join(here, project_slug, '__version__.py'),encoding='utf-8') as f:
+    exec(f.read(), about)
 
 class UploadCommand(Command):
     """Support setup.py upload."""
@@ -79,14 +75,10 @@ class UploadCommand(Command):
             pass
 
         self.status('Building Source and Wheel (universal) distribution…')
-        os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
+        subprocess.run([sys.executable, 'setup.py', 'sdist', 'bdist_wheel', '--universal'], check=True)
 
         self.status('Uploading the package to PyPI via Twine…')
-        os.system('twine upload dist/*')
-
-        self.status('Pushing git tags…')
-        os.system('git tag v{0}'.format(about['__version__']))
-        os.system('git push --tags')
+        subprocess.run(['twine', 'upload', 'dist/*'], check=True)
 
         sys.exit()
 
